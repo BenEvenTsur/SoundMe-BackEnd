@@ -69,6 +69,7 @@ namespace BackSoundMe.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete]
         [Route("delete")]
         public IHttpActionResult Delete(int key)
@@ -80,6 +81,26 @@ namespace BackSoundMe.Controllers
 
                 IDal<Song, int> songsDAl = new SongDal();
                 songsDAl.Delete(key);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public IHttpActionResult Update(Song song)
+        {
+            try
+            {
+                if (song == null || song.ID < 1)
+                    throw new ArgumentException("Key as int is Empty.");
+
+                IDal<Song, int> songsDAl = new SongDal();
+                songsDAl.Update(song);
 
                 return Ok();
             }

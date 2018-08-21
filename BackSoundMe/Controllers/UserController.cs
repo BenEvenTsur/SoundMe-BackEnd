@@ -1,4 +1,5 @@
-﻿using BackSoundMe.DAL;
+﻿using BackSoundMe.Abstracts;
+using BackSoundMe.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,52 @@ namespace BackSoundMe.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
+        [Route("getuserbyid/{key}")]
+        public IHttpActionResult GetUserByID(int key)
+        {
+            try
+            {
+                if (key < 0)
+                    throw new ArgumentException("Key as int is Empty.");
+
+                IDal<User, int> userDAl = new UserDal();
+                User user = userDAl.GetByID(key);
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getuserbyusername/{username}")]
+        public IHttpActionResult GetUserByUserName(string userName)
+        {
+            try
+            {
+                if (userName == null)
+                    throw new ArgumentException("UserName as string is Empty.");
+
+                UserDal userDAl = new UserDal();
+                User user = userDAl.GetByUserName(userName);
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("getall")]
         public IHttpActionResult GetAll()
         {
             try
             {
                 UserDal userDal = new UserDal();
-
-                userDal.Create(new User()
-                {
-                    Email = "sadasd",
-                    First_Name = "sadasdas",
-                    Last_Name = "12321",
-                    Password = "HAHA",
-                    Username = "HOLA1A"
-                });
-
                 List<User> users = userDal.GetAll().ToList();
 
                 return Ok(users);
@@ -36,6 +67,76 @@ namespace BackSoundMe.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public IHttpActionResult Create(User user)
+        {
+            try
+            {
+                if (!IsUserValid(user))
+                    throw new ArgumentException("Model is not valid.");
+
+                IDal<User, int> songsDAl = new UserDal();
+                int songKey = songsDAl.Create(user);
+
+                return Ok(songKey);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete/{key}")]
+        public IHttpActionResult Delete(int key)
+        {
+            try
+            {
+                if (key < 1)
+                    throw new ArgumentException("Key as int is Empty.");
+
+                IDal<User, int> userDAl = new UserDal();
+                userDAl.Delete(key);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public IHttpActionResult Update(User user)
+        {
+            try
+            {
+                if (user == null || user.ID < 1)
+                    throw new ArgumentException("Key as int is Empty.");
+
+                IDal<User, int> userDAl = new UserDal();
+                userDAl.Update(user);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        private bool IsUserValid(User user)
+        {
+            if (user == null
+                || user.ID < 0
+                || string.IsNullOrEmpty(user.Username))
+                return false;
+            else
+                return true;
         }
     }
 }

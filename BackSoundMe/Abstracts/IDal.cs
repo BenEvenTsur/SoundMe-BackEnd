@@ -14,7 +14,7 @@ namespace BackSoundMe.Abstracts
 
         K Create(T model);
 
-        void Update(K id, T model);
+        void Update(T model);
 
         void Delete(K id);
     }

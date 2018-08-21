@@ -11,8 +11,10 @@ namespace BackSoundMe.DAL
     {
         public int Create(Song model)
         {
+            int id = MaxIDInTable() + 1;
             using (ChordsDBEntities1 db = new ChordsDBEntities1())
             {
+                model.ID = id;
                 model = db.Songs.Add(model);
                 db.SaveChanges();
             }
@@ -59,9 +61,45 @@ namespace BackSoundMe.DAL
             return song;
         }
 
-        public void Update(int id, Song model)
+        public void Update(Song model)
         {
-            throw new NotImplementedException();
+            if (model == null || model.ID < 1)
+                throw new ArgumentException("Mode is not valid.");
+
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                Song modelFromDB = db.Songs.FirstOrDefault(e => e.ID  == model.ID);
+
+                if (modelFromDB == null)
+                    throw new NullReferenceException("Model by given ID doesn't exist at database.");
+
+                modelFromDB.Permission = model.Permission;
+                modelFromDB.Language = model.Language;
+                modelFromDB.Lyrics = model.Lyrics;
+                modelFromDB.Comments = model.Comments;
+                modelFromDB.Chords = model.Chords;
+                modelFromDB.Name = model.Name;
+
+                db.Entry(modelFromDB).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        private int MaxIDInTable()
+        {
+            int id = 0;
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (Song song in db.Songs)
+                {
+                    if (song.ID > id)
+                    {
+                        id = song.ID;
+                    }
+                }
+            }
+
+            return id;
         }
     }
 }
