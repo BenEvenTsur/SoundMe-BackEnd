@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ChordsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Artist">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="50" />
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ChordsDB.dbo.CreatedBy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CreatedBy">
+    <Key>
+      <PropertyRef Name="Song_ID" />
+      <PropertyRef Name="Artist_ID" />
+      <PropertyRef Name="Perform" />
+      <PropertyRef Name="Composse" />
+      <PropertyRef Name="Write" />
+    </Key>
+    <Property Name="Song_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Artist_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Perform" Type="bit" Nullable="false" />
+    <Property Name="Composse" Type="bit" Nullable="false" />
+    <Property Name="Write" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Song">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Published_By_User_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Permission" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Language" Type="varchar" MaxLength="10" />
+    <Property Name="Comments" Type="text" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Lyrics" Type="text" />
+    <Property Name="Chords" Type="text" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ChordsDB.dbo.SongsAccess' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SongsAccess">
+    <Key>
+      <PropertyRef Name="Display" />
+      <PropertyRef Name="Shared_Access" />
+      <PropertyRef Name="User_ID" />
+      <PropertyRef Name="Song_ID" />
+    </Key>
+    <Property Name="Display" Type="bit" Nullable="false" />
+    <Property Name="Shared_Access" Type="bit" Nullable="false" />
+    <Property Name="User_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Song_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ChordsDBModelStoreContainer">
+    <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CreatedBy" EntityType="Self.CreatedBy" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CreatedBy].[Song_ID] AS [Song_ID], 
+    [CreatedBy].[Artist_ID] AS [Artist_ID], 
+    [CreatedBy].[Perform] AS [Perform], 
+    [CreatedBy].[Composse] AS [Composse], 
+    [CreatedBy].[Write] AS [Write]
+    FROM [dbo].[CreatedBy] AS [CreatedBy]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SongsAccess" EntityType="Self.SongsAccess" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SongsAccess].[Display] AS [Display], 
+    [SongsAccess].[Shared_Access] AS [Shared_Access], 
+    [SongsAccess].[User_ID] AS [User_ID], 
+    [SongsAccess].[Song_ID] AS [Song_ID]
+    FROM [dbo].[SongsAccess] AS [SongsAccess]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

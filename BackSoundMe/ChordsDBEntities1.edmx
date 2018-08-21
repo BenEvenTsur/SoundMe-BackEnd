@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ChordsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="50" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ChordsDB.dbo.CreatedBy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CreatedBy">
+          <Key>
+            <PropertyRef Name="Song_ID" />
+            <PropertyRef Name="Artist_ID" />
+            <PropertyRef Name="Perform" />
+            <PropertyRef Name="Composse" />
+            <PropertyRef Name="Write" />
+          </Key>
+          <Property Name="Song_ID" Type="int" Nullable="false" />
+          <Property Name="Artist_ID" Type="int" Nullable="false" />
+          <Property Name="Perform" Type="bit" Nullable="false" />
+          <Property Name="Composse" Type="bit" Nullable="false" />
+          <Property Name="Write" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Permission" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Language" Type="varchar" MaxLength="10" />
+          <Property Name="Comments" Type="text" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Lyrics" Type="text" />
+          <Property Name="Chords" Type="text" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Published_By_User_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ChordsDB.dbo.SongsAccess' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SongsAccess">
+          <Key>
+            <PropertyRef Name="Display" />
+            <PropertyRef Name="Shared_Access" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Song_ID" />
+          </Key>
+          <Property Name="Display" Type="bit" Nullable="false" />
+          <Property Name="Shared_Access" Type="bit" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Song_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ChordsDBModelStoreContainer">
+          <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreatedBy" EntityType="Self.CreatedBy" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CreatedBy].[Song_ID] AS [Song_ID], 
+    [CreatedBy].[Artist_ID] AS [Artist_ID], 
+    [CreatedBy].[Perform] AS [Perform], 
+    [CreatedBy].[Composse] AS [Composse], 
+    [CreatedBy].[Write] AS [Write]
+    FROM [dbo].[CreatedBy] AS [CreatedBy]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SongsAccess" EntityType="Self.SongsAccess" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SongsAccess].[Display] AS [Display], 
+    [SongsAccess].[Shared_Access] AS [Shared_Access], 
+    [SongsAccess].[User_ID] AS [User_ID], 
+    [SongsAccess].[Song_ID] AS [Song_ID]
+    FROM [dbo].[SongsAccess] AS [SongsAccess]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChordsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Song">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Permission" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Language" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Chords" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Published_By_User_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreatedBy">
+          <Key>
+            <PropertyRef Name="Song_ID" />
+            <PropertyRef Name="Artist_ID" />
+            <PropertyRef Name="Perform" />
+            <PropertyRef Name="Composse" />
+            <PropertyRef Name="Write" />
+          </Key>
+          <Property Name="Song_ID" Type="Int32" Nullable="false" />
+          <Property Name="Artist_ID" Type="Int32" Nullable="false" />
+          <Property Name="Perform" Type="Boolean" Nullable="false" />
+          <Property Name="Composse" Type="Boolean" Nullable="false" />
+          <Property Name="Write" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SongsAccess">
+          <Key>
+            <PropertyRef Name="Display" />
+            <PropertyRef Name="Shared_Access" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Song_ID" />
+          </Key>
+          <Property Name="Display" Type="Boolean" Nullable="false" />
+          <Property Name="Shared_Access" Type="Boolean" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Song_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ChordsDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artists" EntityType="Self.Artist" />
+          <EntitySet Name="Songs" EntityType="Self.Song" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="CreatedBies" EntityType="Self.CreatedBy" />
+          <EntitySet Name="SongsAccesses" EntityType="Self.SongsAccess" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChordsDBModelStoreContainer" CdmEntityContainer="ChordsDBEntities1">
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="ChordsDBModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="ChordsDBModel.Song">
+              <MappingFragment StoreEntitySet="Song">
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+                <ScalarProperty Name="Chords" ColumnName="Chords" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Published_By_User_ID" ColumnName="Published_By_User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ChordsDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ChordsDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreatedBies">
+            <EntityTypeMapping TypeName="ChordsDBModel.CreatedBy">
+              <MappingFragment StoreEntitySet="CreatedBy">
+                <ScalarProperty Name="Song_ID" ColumnName="Song_ID" />
+                <ScalarProperty Name="Artist_ID" ColumnName="Artist_ID" />
+                <ScalarProperty Name="Perform" ColumnName="Perform" />
+                <ScalarProperty Name="Composse" ColumnName="Composse" />
+                <ScalarProperty Name="Write" ColumnName="Write" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SongsAccesses">
+            <EntityTypeMapping TypeName="ChordsDBModel.SongsAccess">
+              <MappingFragment StoreEntitySet="SongsAccess">
+                <ScalarProperty Name="Display" ColumnName="Display" />
+                <ScalarProperty Name="Shared_Access" ColumnName="Shared_Access" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Song_ID" ColumnName="Song_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
