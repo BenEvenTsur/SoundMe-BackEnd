@@ -9,42 +9,22 @@ using System.Web.Http;
 
 namespace BackSoundMe.Controllers
 {
-    [RoutePrefix("user")]
-    public class UserController : ApiController
+    [RoutePrefix("artist")]
+    public class ArtistController : ApiController
     {
         [HttpGet]
-        [Route("getuserbyid/{key}")]
-        public IHttpActionResult GetUserByID(int key)
+        [Route("getartistbyid/{key}")]
+        public IHttpActionResult GetArtistByID(int key)
         {
             try
             {
                 if (key < 0)
                     throw new ArgumentException("Key as int is Empty.");
 
-                IDal<User, int> userDAl = new UserDal();
-                User user = userDAl.GetByID(key);
+                IDal<Artist, int> artistDAl = new ArtistDal();
+                Artist artist = artistDAl.GetByID(key);
 
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("getuserbyusername/{username}")]
-        public IHttpActionResult GetUserByUserName(string userName)
-        {
-            try
-            {
-                if (userName == null)
-                    throw new ArgumentException("UserName as string is Empty.");
-
-                UserDal userDAl = new UserDal();
-                User user = userDAl.GetByUserName(userName);
-
-                return Ok(user);
+                return Ok(artist);
             }
             catch (Exception ex)
             {
@@ -58,10 +38,10 @@ namespace BackSoundMe.Controllers
         {
             try
             {
-                UserDal userDal = new UserDal();
-                List<User> users = userDal.GetAll().ToList();
+                ArtistDal artistDal = new ArtistDal();
+                List<Artist> artists = artistDal.GetAll().ToList();
 
-                return Ok(users);
+                return Ok(artists);
             }
             catch (Exception ex)
             {
@@ -71,17 +51,17 @@ namespace BackSoundMe.Controllers
 
         [HttpPost]
         [Route("create")]
-        public IHttpActionResult Create(User user)
+        public IHttpActionResult Create(Artist artist)
         {
             try
             {
-                if (!IsUserValid(user))
+                if (!IsArtistValid(artist))
                     throw new ArgumentException("Model is not valid.");
 
-                IDal<User, int> usersDAl = new UserDal();
-                int userKey = usersDAl.Create(user);
+                IDal<Artist, int> artistsDAl = new ArtistDal();
+                int artistKey = artistsDAl.Create(artist);
 
-                return Ok(userKey);
+                return Ok(artistKey);
             }
             catch (Exception ex)
             {
@@ -98,8 +78,8 @@ namespace BackSoundMe.Controllers
                 if (key < 1)
                     throw new ArgumentException("Key as int is Empty.");
 
-                IDal<User, int> userDAl = new UserDal();
-                userDAl.Delete(key);
+                IDal<Artist, int> artistDAl = new ArtistDal();
+                artistDAl.Delete(key);
 
                 return Ok();
             }
@@ -111,15 +91,15 @@ namespace BackSoundMe.Controllers
 
         [HttpPost]
         [Route("update")]
-        public IHttpActionResult Update(User user)
+        public IHttpActionResult Update(Artist arist)
         {
             try
             {
-                if (user == null || user.ID < 1)
+                if (arist == null || arist.ID < 1)
                     throw new ArgumentException("Key as int is Empty.");
 
-                IDal<User, int> userDAl = new UserDal();
-                userDAl.Update(user);
+                IDal<Artist, int> artistDAl = new ArtistDal();
+                artistDAl.Update(arist);
 
                 return Ok();
             }
@@ -129,14 +109,14 @@ namespace BackSoundMe.Controllers
             }
         }
 
-        private bool IsUserValid(User user)
+        private bool IsArtistValid(Artist ar)
         {
-            if (user == null
-                || user.ID < 0
-                || string.IsNullOrEmpty(user.Username))
+            if (ar == null
+                || ar.ID < 0)
                 return false;
             else
                 return true;
         }
     }
 }
+
