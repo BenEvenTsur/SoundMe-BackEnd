@@ -109,6 +109,25 @@ namespace BackSoundMe.DAL
             }
         }
 
+        public IEnumerable<Song> GetSharedSongs(int userID)
+        {
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (SongsAccess songA in db.SongsAccesses)
+                {
+                    if (songA.User_ID == userID&& songA.Display==true&&songA.Shared_Access==true)
+                    {
+                        SongDal songDal = new SongDal();
+                        Song song= songDal.GetByID(songA.Song_ID);
+                        if (song.Published_By_User_ID!=userID&&(String.Compare(song.Permission,"Shared")==0))
+                        {
+                            yield return song;
+                        }
+                    }
+                }
+            }
+        }
+
         private int MaxIDInTable()
         {
             int id = 0;
