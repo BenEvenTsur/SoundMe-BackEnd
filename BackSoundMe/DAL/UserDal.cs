@@ -95,6 +95,20 @@ namespace BackSoundMe.DAL
             }
         }
 
+        public IEnumerable<Song> GetMySongs(int userID)
+        {
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (Song song in db.Songs)
+                {
+                    if (song.Published_By_User_ID==userID)
+                    {
+                        yield return song;
+                    }
+                }
+            }
+        }
+
         private int MaxIDInTable()
         {
             int id = 0;

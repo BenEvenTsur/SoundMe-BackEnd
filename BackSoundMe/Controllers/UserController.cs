@@ -69,6 +69,40 @@ namespace BackSoundMe.Controllers
             }
         }
 
+        /*[HttpGet]
+        [Route("getSharedsongs")]
+        public IHttpActionResult GetSharedSongs()
+        {
+            try
+            {
+                UserDal userDAl = new UserDal();
+                List<Song> songs = songsDAl.GetPubicSongs().ToList();
+
+                return Ok(songs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }*/
+
+        [HttpGet]
+        [Route("getmysongs/{userID}")]
+        public IHttpActionResult GetMySongs(int userID)
+        {
+            try
+            {
+                UserDal userDAl = new UserDal();
+                List<Song> songs = userDAl.GetMySongs(userID).ToList();
+
+                return Ok(songs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("create")]
         public IHttpActionResult Create(User user)

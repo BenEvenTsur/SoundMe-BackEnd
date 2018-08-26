@@ -14,8 +14,25 @@ namespace BackSoundMe.Controllers
     public class SongController : ApiController
     {
         [HttpGet]
-        [Route("{key}")]
-        public IHttpActionResult GetSong(int key)
+        [Route("getpublicsongs")]
+        public IHttpActionResult GetPublicSongs()
+        {
+            try
+            {
+                SongDal songsDAl = new SongDal();
+                List<Song> songs = songsDAl.GetPubicSongs().ToList();
+
+                return Ok(songs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getsongbyid/{key}")]
+        public IHttpActionResult GetSongById(int key)
         {
             try
             {
@@ -33,14 +50,16 @@ namespace BackSoundMe.Controllers
             }
         }
 
+
+
         [HttpGet]
-        [Route("songs")]
-        public IHttpActionResult GetSongs()
+        [Route("getall")]
+        public IHttpActionResult GetAll()
         {
             try
             {
                 IDal<Song, int> songsDAl = new SongDal();
-                List<Song> songs = songsDAl.GetAll()?.ToList();
+                List<Song> songs = songsDAl.GetAll().ToList();
 
                 return Ok(songs);
             }

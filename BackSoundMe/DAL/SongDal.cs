@@ -49,6 +49,20 @@ namespace BackSoundMe.DAL
             }
         }
 
+        public IEnumerable<Song> GetPubicSongs()
+        {
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (Song song in db.Songs)
+                {
+                    if (String.Compare(song.Permission, "Public") == 0)
+                    {
+                        yield return song;
+                    }
+                }
+            }
+        }
+
         public Song GetByID(int ID)
         {
             Song song = null;
