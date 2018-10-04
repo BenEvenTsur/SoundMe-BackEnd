@@ -430,3 +430,8 @@ E:\Ortal&Ben\SoundMe-BackEnd\BackSoundMe\obj\Debug\BackSoundMe.dll
 E:\Ortal&Ben\SoundMe-BackEnd\BackSoundMe\obj\Debug\BackSoundMe.pdb
 E:\Ortal&Ben\SoundMe-BackEnd\BackSoundMe\bin\FromHeaderAttribute.dll
 E:\Ortal&Ben\SoundMe-BackEnd\BackSoundMe\bin\Swagger.Net.dll
+C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\FromHeaderAttribute.dll
+C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\Swagger.Net.dll
+C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Cors.dll
+C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.dll
+C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.xml
