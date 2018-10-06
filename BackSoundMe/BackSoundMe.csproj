@@ -161,6 +161,7 @@
       <DependentUpon>ChordsDBEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ArtistDal.cs" />
+    <Compile Include="DAL\CreatedByDal.cs" />
     <Compile Include="DAL\SongDal.cs" />
     <Compile Include="DAL\UserDal.cs" />
     <Compile Include="Global.asax.cs">

@@ -29,7 +29,7 @@ namespace BackSoundMe
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<CreatedBy> CreatedBies { get; set; }
+        public virtual DbSet<CreatedBy> CreatedByArtists { get; set; }
         public virtual DbSet<SongsAccess> SongsAccesses { get; set; }
     }
 }

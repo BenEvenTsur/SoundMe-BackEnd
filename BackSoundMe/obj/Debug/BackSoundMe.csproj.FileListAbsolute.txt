@@ -435,3 +435,8 @@ C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\Swagger.Net.dll
 C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Cors.dll
 C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.dll
 C:\Users\Alex\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.xml
+C:\Users\Ortal\Desktop\SoundMe-BackEnd\BackSoundMe\bin\FromHeaderAttribute.dll
+C:\Users\Ortal\Desktop\SoundMe-BackEnd\BackSoundMe\bin\Swagger.Net.dll
+C:\Users\Ortal\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Cors.dll
+C:\Users\Ortal\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.dll
+C:\Users\Ortal\Desktop\SoundMe-BackEnd\BackSoundMe\bin\System.Web.Http.Cors.xml
