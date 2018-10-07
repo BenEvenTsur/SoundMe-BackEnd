@@ -12,63 +12,79 @@ namespace BackSoundMe.Controllers
    [RoutePrefix("createdby")]
     public class CreatedByController : ApiController
     {
-       /* [HttpGet]
-        [Route("getpublicsongs")]
-        public IHttpActionResult GetPublicSongs()
+        [HttpGet]
+        [Route("getartistsbysongid/{songID}")]
+        public IHttpActionResult GetArtistsBySongID(int songID)
         {
             try
             {
-                SongDal songsDAl = new SongDal();
-                List<Song> songs = songsDAl.GetPubicSongs().ToList();
+                CreatedByDal createdByDal = new CreatedByDal();
+                List<CreatedBy> artistsOfSong = createdByDal.GetAllArtistsOfSong(songID).ToList();
 
-                return Ok(songs);
+                return Ok(artistsOfSong);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+        /* [HttpGet]
+         [Route("getpublicsongs")]
+         public IHttpActionResult GetPublicSongs()
+         {
+             try
+             {
+                 SongDal songsDAl = new SongDal();
+                 List<Song> songs = songsDAl.GetPubicSongs().ToList();
 
-            [HttpGet]
-            [Route("getsongbyid/{key}")]
-            public IHttpActionResult GetSongById(int key)
-            {
-                try
-                {
-                    if (key < 0)
-                        throw new ArgumentException("Key as Guid is Empty.");
+                 return Ok(songs);
+             }
+             catch (Exception ex)
+             {
+                 return BadRequest(ex.Message);
+             }
+         }
 
-                    IDal<Song, int> songsDAl = new SongDal();
-                    Song song = songsDAl.GetByID(key);
+             [HttpGet]
+             [Route("getsongbyid/{key}")]
+             public IHttpActionResult GetSongById(int key)
+             {
+                 try
+                 {
+                     if (key < 0)
+                         throw new ArgumentException("Key as Guid is Empty.");
 
-                    return Ok(song);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
+                     IDal<Song, int> songsDAl = new SongDal();
+                     Song song = songsDAl.GetByID(key);
+
+                     return Ok(song);
+                 }
+                 catch (Exception ex)
+                 {
+                     return BadRequest(ex.Message);
+                 }
+             }
 
 
 
-            [HttpGet]
-            [Route("getsongsbyartist/{key}")]
-            public IHttpActionResult getSongsByArtist(int key)
-            {
-                try
-                {
-                    IDal<Song, int> songsDAl = new SongDal();
-                    List<Song> songs = songsDAl.GetAll().ToList();
+             [HttpGet]
+             [Route("getsongsbyartist/{key}")]
+             public IHttpActionResult getSongsByArtist(int key)
+             {
+                 try
+                 {
+                     IDal<Song, int> songsDAl = new SongDal();
+                     List<Song> songs = songsDAl.GetAll().ToList();
 
-                    return Ok(songs);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
-*/
-         
-        
+                     return Ok(songs);
+                 }
+                 catch (Exception ex)
+                 {
+                     return BadRequest(ex.Message);
+                 }
+             }
+ */
+
+
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BackSoundMe.DAL
 {
-    public class CreatedByDal : IDal<CreatedBy,int>
+    public class CreatedByDal : IDal<CreatedBy, int>
     {
         public int Create(CreatedBy model)
         {
@@ -61,23 +61,37 @@ namespace BackSoundMe.DAL
 
         public void Update(CreatedBy model)
         {
-           /* if (model == null || model.ID < 1)
-                throw new ArgumentException("Mode is not valid.");
+            /* if (model == null || model.ID < 1)
+                 throw new ArgumentException("Mode is not valid.");
 
-            using (ChordsDBEntities1 db = new ChordsDBEntities1())
-            {
-                Artist modelFromDB = db.Artists.FirstOrDefault(e => e.ID == model.ID);
+             using (ChordsDBEntities1 db = new ChordsDBEntities1())
+             {
+                 Artist modelFromDB = db.Artists.FirstOrDefault(e => e.ID == model.ID);
 
-                if (modelFromDB == null)
-                    throw new NullReferenceException("Model by given ID doesn't exist at database.");
+                 if (modelFromDB == null)
+                     throw new NullReferenceException("Model by given ID doesn't exist at database.");
 
-                modelFromDB.First_Name = model.First_Name;
-                modelFromDB.Last_Name = model.Last_Name;
+                 modelFromDB.First_Name = model.First_Name;
+                 modelFromDB.Last_Name = model.Last_Name;
 
-                db.Entry(modelFromDB).State = EntityState.Modified;
-                db.SaveChanges();
-            }*/
+                 db.Entry(modelFromDB).State = EntityState.Modified;
+                 db.SaveChanges();
+             }*/
         }
 
+        public IEnumerable<CreatedBy> GetAllArtistsOfSong(int songID)
+        {
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (CreatedBy createdby in db.CreatedByArtists)
+                {
+                    if (createdby.Song_ID == songID)
+                    {
+                        yield return createdby;
+                    }
+                }
+            }
+
+        }
     }
 }
