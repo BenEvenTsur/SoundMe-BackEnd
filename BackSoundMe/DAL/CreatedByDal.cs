@@ -91,6 +91,19 @@ namespace BackSoundMe.DAL
                     }
                 }
             }
+        }
+        public IEnumerable<CreatedBy> GetAllSongsOfArtist(int artistID)
+        {
+            using (ChordsDBEntities1 db = new ChordsDBEntities1())
+            {
+                foreach (CreatedBy createdby in db.CreatedByArtists)
+                {
+                    if (createdby.Artist_ID == artistID)
+                    {
+                        yield return createdby;
+                    }
+                }
+            }
 
         }
     }

@@ -13,7 +13,7 @@ namespace BackSoundMe.Controllers
     public class CreatedByController : ApiController
     {
         [HttpGet]
-        [Route("getartistsbysongid/{songID}")]
+        [Route("getartistsbysongid/{songid}")]
         public IHttpActionResult GetArtistsBySongID(int songID)
         {
             try
@@ -22,6 +22,23 @@ namespace BackSoundMe.Controllers
                 List<CreatedBy> artistsOfSong = createdByDal.GetAllArtistsOfSong(songID).ToList();
 
                 return Ok(artistsOfSong);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getsongsofartist/{artistid}")]
+        public IHttpActionResult GetSongsOfArtist(int artistID)
+        {
+            try
+            {
+                CreatedByDal createdByDal = new CreatedByDal();
+                List<CreatedBy> songsOfArtists = createdByDal.GetAllSongsOfArtist(artistID).ToList();
+
+                return Ok(songsOfArtists);
             }
             catch (Exception ex)
             {
